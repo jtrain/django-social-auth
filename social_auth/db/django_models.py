@@ -1,6 +1,12 @@
 """Django ORM models for Social Auth"""
 from django.db import models
-from django.db.models.loading import get_model
+try:
+    from django.apps import apps
+except ImportError:
+    from django.db.models.loading import get_model
+else:
+    get_model = apps.get_model
+
 from django.db.utils import IntegrityError
 
 from social_auth.db.base import UserSocialAuthMixin, AssociationMixin, \

@@ -9,12 +9,19 @@ from cgi import parse_qsl
 
 from collections import defaultdict
 
+try:
+    from django.apps import apps
+    get_model = apps.get_model
+except ImportError:
+    from django.db.models.loading import get_model
 from django.conf import settings
 from django.db.models import Model
-from django.db.models.loading import get_model
 from django.contrib.contenttypes.models import ContentType
 from django.utils.functional import SimpleLazyObject
-from django.utils.importlib import import_module
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
 
 
 try:
@@ -239,7 +246,6 @@ def dsa_urlopen(*args, **kwargs):
 
 def get_backend_name(backend):
     return getattr(getattr(backend, 'AUTH_BACKEND', backend), 'name', None)
-
 
 def get_custom_user_model_for_migrations():
     user_model = getattr(settings, 'SOCIAL_AUTH_USER_MODEL', None) or \
