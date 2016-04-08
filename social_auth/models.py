@@ -9,12 +9,14 @@ if MODELS == 'social_auth.db.django_models':
             UserSocialAuth as UserSocialAuthBase, \
             Nonce as NonceBase, \
             Association as AssociationBase, \
+            Code as CodeBase, \
             DjangoStorage as DjangoStorageBase
 else:
     from social.apps.django_app.me.models import \
             UserSocialAuth as UserSocialAuthBase, \
             Nonce as NonceBase, \
             Association as AssociationBase, \
+            Code as CodeBase, \
             DjangoStorage as DjangoStorageBase
 
 
@@ -32,6 +34,9 @@ class Association(AssociationBase):
     class Meta:
         proxy = True
 
+class Code(CodeBase):
+    class Meta:
+        proxy = True
 
 class DjangoStorage(DjangoStorageBase):
     user = UserSocialAuth
