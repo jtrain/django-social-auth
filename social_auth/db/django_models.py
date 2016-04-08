@@ -101,6 +101,14 @@ class Association(models.Model, AssociationMixin):
         app_label = 'social_auth'
         unique_together = ('server_url', 'handle')
 
+class Code(models.Model):
+    email = models.EmailField()
+    code = models.CharField(max_length=32, db_index=True)
+    verified = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'social_auth_code'
+        unique_together = ('email', 'code')
 
 def is_integrity_error(exc):
     return exc.__class__ is IntegrityError
